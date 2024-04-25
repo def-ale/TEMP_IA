@@ -27,6 +27,14 @@ async function run() {
             height: 300
         }
     );
+
+    // Converte os dados
+    const tensorData = convertToTensor(data);
+    const { inputs, labels } = tensorData;
+
+    // Treina o modelo
+    await trainModel(model, inputs, labels);
+    console.log("Treino completo!");
 }
 
 
@@ -88,6 +96,10 @@ function convertToTensor(data) {
     });
 }
 
+const model = createModel();
+tfvis.show.modelSummary({name: "Modelo"}, model);
+
+
 async function trainModel(model, inputs, labels) {
     // Prepara o modelo para o treinamento.
     model.compile({
@@ -111,6 +123,4 @@ async function trainModel(model, inputs, labels) {
     });
 }
 
-tfvis.show.modelSummary({name: "Modelo"}, model);
 
-const model = createModel();
